@@ -173,7 +173,7 @@ class Station implements DatabaseObject, JsonSerializable
         return $this->errors[$field];
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize() : mixed
     {
         //return get_object_vars($this);
         return [

@@ -156,7 +156,7 @@ class Measurement implements DatabaseObject, JsonSerializable
         return $this->errors[$field];
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize() : mixed
     {
         $data = [
             "id" => intval($this->id),
