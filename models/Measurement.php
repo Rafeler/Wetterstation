@@ -96,7 +96,22 @@ class Measurement implements DatabaseObject, JsonSerializable
      */
     public static function get($id)
     {
+        $db = Database::connect();
 
+        $sql = "SELECT * FROM measurement WHERE id = ?";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$id]);
+
+        $measurement = $stmt->fetchObject("Measurement");
+
+        if ($measurement) {
+            $measurement->station = Station::get($measurement->station_id);
+        }
+
+        Database::disconnect();
+
+        return $measurement ? $measurement : null;
     }
 
     public static function getAll() {
