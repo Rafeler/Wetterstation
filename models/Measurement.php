@@ -44,7 +44,25 @@ class Measurement implements DatabaseObject, JsonSerializable
      */
     public function create()
     {
+        $db = Database::connect();
 
+        $sql = "INSERT INTO measurement (time, temperature, rain, station_id)
+            VALUES (?, ?, ?, ?)";
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute([
+            $this->time,
+            $this->temperature,
+            $this->rain,
+            $this->station_id
+        ]);
+
+        $id = $db->lastInsertId();
+
+        Database::disconnect();
+
+        return $id;
     }
 
     /**
