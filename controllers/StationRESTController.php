@@ -35,31 +35,80 @@ class StationRESTController extends RESTController
      */
     private function handleGETRequest()
     {
+        // GET api.php?r=station
+        if ($this->verb == null && empty($this->args)) {
 
+            $stations = Station::getAll();
+            $this->response($stations);
+
+        }
+
+        // GET api.php?r=station/1
+        else if ($this->verb == null && sizeof($this->args) == 1) {
+
+            $station = Station::get($this->args[0]);
+            $this->response($station);
+
+        }
+
+        // GET api.php?r=station/1/measurement
+        else if ($this->verb == "measurement" && sizeof($this->args) == 1) {
+
+            $measurements = Measurement::getAllByStation($this->args[0]);
+            $this->response($measurements);
+
+        }
+
+        else {
+            $this->response("Bad Request", 400);
+        }
     }
 
-    /**
-     * create station: POST api.php?r=station
-     */
     private function handlePOSTRequest()
     {
+        $station = new Station();
 
+        $station->setName($this->getDataOrNull("name"));
+        $station->setAltitude($this->getDataOrNull("altitude"));
+        $station->setLocation($this->getDataOrNull("location"));
+
+        if ($station->save()) {
+            $this->response("Created", 201);
+        } else {
+            $this->response("Error", 400);
+        }
     }
 
-    /**
-     * update station: PUT api.php?r=station/25 -> args[0] = 25
-     */
     private function handlePUTRequest()
     {
+        if ($this->verb == null && sizeof($this->args) == 1) {
 
+            $station = Station::get($this->args[0]);
+
+            $station->setName($this->getDataOrNull("name"));
+            $station->setAltitude($this->getDataOrNull("altitude"));
+            $station->setLocation($this->getDataOrNull("location"));
+
+            if ($station->save()) {
+                $this->response("OK", 200);
+            } else {
+                $this->response("Error", 400);
+            }
+
+        } else {
+            $this->response("Not Found", 404);
+        }
     }
 
-    /**
-     * delete station: DELETE api.php?r=station/25 -> args[0] = 25
-     */
     private function handleDELETERequest()
     {
+        if ($this->verb == null && sizeof($this->args) == 1) {
 
-    }
+            Station::delete($this->args[0]);
 
-}
+            $this->response("OK", 200);
+
+        } else {
+            $this->response("Not Found", 404);
+        }
+    }}
