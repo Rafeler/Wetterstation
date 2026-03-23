@@ -9,17 +9,18 @@ class StationController extends Controller
     public function handleRequest($route)
     {
         $operation = sizeof($route) > 1 ? $route[1] : 'index';
+        $id = isset($_GET['id']) ? $_GET['id'] : null;
 
         if ($operation == 'index') {
             $this->actionIndex();
         } else if ($operation == 'view') {
-            $this->actionView($route[2]);
+            $this->actionView($id);
         } else if ($operation == 'create') {
             $this->actionCreate();
         } else if ($operation == 'update') {
-            $this->actionUpdate($route[2]);
+            $this->actionUpdate($id);
         } else if ($operation == 'delete') {
-            $this->actionDelete($route[2]);
+            $this->actionDelete($id);
         } else {
             Controller::showError("Page not found", "Page for operation " . $operation . " was not found!");
         }

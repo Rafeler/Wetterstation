@@ -5,13 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="82ecebaa-cb9e-46c5-a50f-f9c9837d8237" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/js/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/MeasurementController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/MeasurementController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/StationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/StationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/StationRESTController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/StationRESTController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Measurement.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/Measurement.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/Station.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/Station.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/home/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/home/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/layouts/top.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/layouts/top.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/measurement/delete.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/measurement/delete.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/measurement/update.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/measurement/update.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/measurement/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/measurement/view.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +99,7 @@
       <updated>1773053070894</updated>
       <workItem from="1773053072128" duration="603000" />
       <workItem from="1773390209732" duration="1447000" />
-      <workItem from="1774249252241" duration="476000" />
+      <workItem from="1774249252241" duration="2309000" />
     </task>
     <servers />
   </component>
