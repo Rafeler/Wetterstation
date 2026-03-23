@@ -52,8 +52,7 @@ class StationRESTController extends RESTController
         }
 
         // GET api.php?r=station/1/measurement
-        else if ($this->verb == "measurement" && sizeof($this->args) == 1) {
-
+        else if (sizeof($this->args) == 2 && $this->args[1] == "measurement") {
             $measurements = Measurement::getAllByStation($this->args[0]);
             $this->response($measurements);
 
