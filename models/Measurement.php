@@ -44,7 +44,25 @@ class Measurement implements DatabaseObject, JsonSerializable
      */
     public function create()
     {
+        $db = Database::connect();
 
+        $sql = "INSERT INTO measurement (time, temperature, rain, station_id)
+            VALUES (?, ?, ?, ?)";
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute([
+            $this->time,
+            $this->temperature,
+            $this->rain,
+            $this->station_id
+        ]);
+
+        $id = $db->lastInsertId();
+
+        Database::disconnect();
+
+        return $id;
     }
 
     /**
@@ -52,7 +70,23 @@ class Measurement implements DatabaseObject, JsonSerializable
      */
     public function update()
     {
+        $db = Database::connect();
 
+        $sql = "UPDATE measurement
+            SET time = ?, temperature = ?, rain = ?, station_id = ?
+            WHERE id = ?";
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute([
+            $this->time,
+            $this->temperature,
+            $this->rain,
+            $this->station_id,
+            $this->id
+        ]);
+
+        Database::disconnect();
     }
 
     /**
@@ -62,11 +96,38 @@ class Measurement implements DatabaseObject, JsonSerializable
      */
     public static function get($id)
     {
+        $db = Database::connect();
 
+        $sql = "SELECT * FROM measurement WHERE id = ?";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$id]);
+
+        $measurement = $stmt->fetchObject("Measurement");
+
+        if ($measurement) {
+            $measurement->station = Station::get($measurement->station_id);
+        }
+
+        Database::disconnect();
+
+        return $measurement ? $measurement : null;
     }
 
-    public static function getAll() {
+    public static function getAll()
+    {
+        $db = Database::connect();
 
+        $sql = "SELECT * FROM measurement ORDER BY time ASC";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+
+        $items = $stmt->fetchAll(PDO::FETCH_CLASS, "Measurement");
+
+        Database::disconnect();
+
+        return $items;
     }
 
     /**
@@ -76,16 +137,35 @@ class Measurement implements DatabaseObject, JsonSerializable
      */
     public static function getAllByStation($station_id)
     {
+        $db = Database::connect();
 
+        $sql = "SELECT * FROM measurement
+            WHERE station_id = ?
+            ORDER BY time ASC";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$station_id]);
+
+        $items = $stmt->fetchAll(PDO::FETCH_CLASS, "Measurement");
+
+        Database::disconnect();
+
+        return $items;
     }
-
     /**
      * Deletes the object from the database
      * @param integer $id
      */
     public static function delete($id)
     {
+        $db = Database::connect();
 
+        $sql = "DELETE FROM measurement WHERE id = ?";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$id]);
+
+        Database::disconnect();
     }
 
     private function validateTime()
