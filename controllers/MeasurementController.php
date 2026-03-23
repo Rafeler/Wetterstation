@@ -48,9 +48,13 @@ class MeasurementController extends Controller
             }
         }
 
-        $this->render('measurement/update', ['model' => $model, 'stations' => $stations]);
+        $this->renderUpdate($model, $stations);
     }
-
+    public function renderUpdate($model, $stations) {
+        include 'views/layouts/top.php';
+        include 'views/measurement/update.php';
+        include 'views/layouts/bottom.php';
+    }
     public function actionDelete($id)
     {
         if (!empty($_POST)) {
@@ -60,6 +64,42 @@ class MeasurementController extends Controller
         }
 
         $this->render('measurement/delete', Measurement::get($id));
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getTime() {
+        return $this->time;
+    }
+
+    public function getTemperature() {
+        return $this->temperature;
+    }
+
+    public function getRain() {
+        return $this->rain;
+    }
+
+    public function getStationId() {
+        return $this->station_id;
+    }
+
+    public function setTime($time) {
+        $this->time = $time;
+    }
+
+    public function setTemperature($temperature) {
+        $this->temperature = $temperature;
+    }
+
+    public function setRain($rain) {
+        $this->rain = $rain;
+    }
+
+    public function setStationId($station_id) {
+        $this->station_id = $station_id;
     }
 
 }
