@@ -14,6 +14,7 @@ class Measurement implements DatabaseObject, JsonSerializable
 
     private $errors = [];
 
+
     public function validate()
     {
         return $this->validateTime() & $this->validateTemperature() & $this->validateRain() & $this->validateStationId();
@@ -97,23 +98,25 @@ class Measurement implements DatabaseObject, JsonSerializable
     public static function get($id)
     {
         $db = Database::connect();
-
         $sql = "SELECT * FROM measurement WHERE id = ?";
-
         $stmt = $db->prepare($sql);
         $stmt->execute([$id]);
-
-        $measurement = $stmt->fetchObject("Measurement");
-
-        if ($measurement) {
-            $measurement->station = Station::get($measurement->station_id);
-        }
-
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
         Database::disconnect();
 
-        return $measurement ? $measurement : null;
-    }
+        if (!$row) return null;
 
+        $model = new Measurement();
+        $model->setTime($row['time']);
+        $model->setTemperature($row['temperature']);
+        $model->setRain($row['rain']);
+        $model->setStationId($row['station_id']);
+        $model->setId($row['id']);
+        return $model;
+    }
+    public function setId($id) {
+        $this->id = $id;
+    }
     public static function getAll()
     {
         $db = Database::connect();
@@ -255,5 +258,39 @@ class Measurement implements DatabaseObject, JsonSerializable
 
         return $data;
     }
+    public function getId() {
+        return $this->id;
+    }
 
+    public function getTime() {
+        return $this->time;
+    }
+
+    public function getTemperature() {
+        return $this->temperature;
+    }
+
+    public function getRain() {
+        return $this->rain;
+    }
+
+    public function getStationId() {
+        return $this->station_id;
+    }
+
+    public function setTime($time) {
+        $this->time = $time;
+    }
+
+    public function setTemperature($temperature) {
+        $this->temperature = $temperature;
+    }
+
+    public function setRain($rain) {
+        $this->rain = $rain;
+    }
+
+    public function setStationId($station_id) {
+        $this->station_id = $station_id;
+    }
 }
